@@ -1,0 +1,45 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Reporting index{% endblock %}
+
+{% block body %}
+    <h1>Signalements</h1>
+
+
+    <div class="col-md-3">
+            {% include 'admin_reporting/_filter.html.twig'%}
+    </div>
+    
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Contenu</th>
+                <th>Chapitre</th>
+                <th>Auteur</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for reporting in reportings %}
+            <tr>
+                <td>{{ reporting.content }}</td>
+                <td>{{ reporting.chapter.title }}</td>
+                <td>{{ reporting.manuscript.authorId.email }}</td>
+                <td class="text-end">
+                    <a href="{{ path('admin_reporting_show', {'chapterId': reporting.chapter.id, 'manuscriptId': reporting.manuscript.id, 'id': reporting.id}) }}" class="btn btn-primary"><i class="align-middle" data-feather="eye"></i></a></a>
+                    <a href="{{ path('admin_reporting_edit', {'chapterId': reporting.chapter.id, 'manuscriptId': reporting.manuscript.id, 'id': reporting.id}) }}" class="btn btn-success"><i class="align-middle" data-feather="edit-2"></i></a>
+                </td>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('admin_reporting_new') }}">Create new</a> #}
+{% endblock %}

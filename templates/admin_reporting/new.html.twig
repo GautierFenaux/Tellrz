@@ -1,0 +1,65 @@
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    {{ include('admin_reporting/_form.html.twig') }}
+
+    
+{% endblock %}
+
+
+{# {% block javascripts %}
+	 <script>
+	 $(document).ready(function(){	
+	    $("#formButton").submit(function(event){
+		submitForm();
+		return false;
+	});
+});
+
+function submitForm(){
+	$.ajax({
+		type: "POST",
+		url: path('App\\Controller\\AdminReportingController::new'),
+		cache:false,
+		data: $('form#formModal).serialize(),
+		/*success: function(response){
+			$("#contact").html(response)
+			$("#contact-modal").modal('hide');
+		},*/ 
+		error: function(){
+			alert("Error");
+		});
+	});
+}
+</script>  #}
+	
+   
+	
+{# A qui je dois envoyer la requête (paramètre: url) ? #}
+    {# // Url : définis le script ou la ressource à appeler.
+    $(document).ready(function() {
+        $("#formButton").submit("click",function(e) {
+           $.ajax({
+        url : path('App\\Controller\\AdminReportingController::new'),
+        data: {"donnees":[]},//tes données à envoyer
+        type : POST,
+        //success : function(data) {
+        //    $('.modal-body').html(data); // Utiliser un id serait plus précis        
+		//}
+        });
+        return false;
+       }); 
+	});#}
+
+
+
+
+
+
+
+
+
+
+	{# {% endblock %} #}

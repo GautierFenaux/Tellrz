@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un chapitre{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex flex-row justify-content-around align-items-end padding-top">
+        <h1>Modifier un chapitre</h1>
+        {# <a href="{{ path('chapters_list', {'id': manuscript.id}) }}" class="btn">Revenir à la liste</a> #}
+    </div>
+
+    
+
+    <div class="container mt-5" id="content">
+    <div id="message" class="text-center align-items-center alert alert-success opacity-0">Vos modifications ont bien été prises en compte.</div>
+            {{ include('chapter/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+    //Appel de la fonction fetchGo avec l'attribut onsubmit sur le bouton
+        function fetchgo () {
+            // (A) GET FORM DATA
+            var form = document.getElementById("asynchForm");
+            var data = new FormData(form);
+            console.log(data);
+            //La méthode fetch() prend un argument obligatoire, le chemin vers la ressource souhaitée 
+            // (B) FETCH
+            // window.location.href Permet de récupérer l'url
+            // appeler la méthode sur le fetch
+            fetch(window.location.href, {
+            method: "post",
+            body: data
+            })
+            .then((res) => { return res.text(); })
+            .then((txt) => { console.log(txt); })
+            .catch((err) => { console.log(err); });
+            // (C) PREVENT HTML FORM SUBMIT
+            
+            document.getElementById('message').classList.remove('opacity-0')
+            
+            setTimeout(function(){
+            document.getElementById('message').classList.add("opacity-0")
+            }, 6000)
+            
+            
+            return false;
+            }  
+
+            // erreur 303, je dois effectué la requête appropriée vers une URL différente    
+            /*
+            A 303 See Other message is an HTTP response status code indicating 
+            that the requested resource can be found at another URI (address) by using the GET HTTP method.
+            These codes indicate to the user agent (i.e. your web browser) 
+            that an additional action is required in order to complete the request and access the desired resource.
+
+            Quand chargé une deuxième fois fetch amène sur chapter...
+            
+            */     
+    </script>
+{% endblock %}

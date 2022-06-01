@@ -1,0 +1,18 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Edit Reporting{% endblock %}
+
+{% block body %}
+    
+
+    <div class="d-flex flex-row justify-content-between">
+        <h1> Modifier un signalement </h1>
+        <a href="{{ path('admin_reporting_index') }}" class="btn btn-dark mb-3" ><strong> Retourner à la liste </strong></a>
+    </div>
+
+
+    {{ include('admin_reporting/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    {{ include('admin_reporting/_delete_form.html.twig') }}
+
+
+{% endblock %}

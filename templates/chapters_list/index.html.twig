@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des chapitres
+{% endblock %}
+
+{% block body %}
+	<div class="global pt-5 pb-5" id="content">
+		<div class="d-md-flex flex-row justify-content-around align-items-end mb-4 ms-3 ms-md-0">
+			<h1>Liste des chapitres</h1>
+			<a href="{{ path('profile') }}" class="btn">Retourner sur mon profil</a>
+		</div>
+		<div class="container pb-5">
+			<div class="wrapper">
+				<input class="radio" id="one" name="group" type="radio" checked>
+				<input class="radio" id="two" name="group" type="radio">
+
+				<div class="tabs">
+					<label class="tab" id="one-tab" for="one">Chapitres</label>
+					<label class="tab" id="two-tab" for="two">Informations générales</label>
+				</div>
+
+
+				<div class="panels">
+					<div class="panel" id="one-panel">
+						<div class="panel-body">
+							<div class="jQuery position-relative">
+								<div class="jQuery2 position-absolute top-0 start-0">
+									<a href="{{ path('chapter_new', {'manuscriptId': manuscript.id}) }}" class="btn">Nouveau chapitre</a>
+								</div>
+								<div class="text-center">
+									<h2>{{ manuscript.title }}</h2>
+								</div>
+							</div>
+							{% if chapters is not null  %}
+								<ul class="mt-5 d-md-flex flex-column align-items-center flex-wrap m-0 wrapperChapters horizontalScroll pt-3 box">
+									{% for key, value in chapters %}
+										<li class="border border-2 p-lg-3 mb-3 col-12 col-md-5 me-2 max-height-chapter " data-id="{{ value.id }}">
+											<div class="d-lg-flex justify-content-between col-12 mt-md-3 dataBox" data-id="{{ value.id }}">
+												<div class="w-100 overflowParent ">
+													<div class="overflow-ellipsis">
+														<p class="value text-center text-lg-start">{{ value.title }}</p>
+													</div>
+												</div>
+
+												<div class="mt-2 mt-md-0 d-flex justify-content-center">
+													<a href="{{ path('chapter_edit', {'id': value.id}) }}" class="text-center btn btn-sm me-2 height-button">Modifier</a>
+
+													<form method="post" action="{{ path('chapter_delete', {'id': value.id}) }}" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce chapitre ?');">
+														<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ value.id) }}">
+														<button class="btn btn-sm">Supprimer</button>
+													</form>
+												</div>
+											</div>
+										</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+
+					<div class="panel" id="two-panel">
+
+						<div class="">
+							<div class="jQuery3 position-relative">
+								<div class="jQuery4 position-absolute top-0 start-0">
+									<a href="{{ path('edition_tools_edit', {'id': manuscript.id}) }}" class="btn">Modifier</a>
+								</div>
+								<div class="jQuery5">
+									<h2 class="text-center">{{ manuscript.title }}</h2>
+								</div>
+							</div>
+
+							<div class="text-center margin-top">
+								<p class=" mt-5">
+									Intrigue :
+									{{ manuscript.description }}
+								</p>
+
+								<p class=" mt-5">
+									Lectorat visé :
+									{{ manuscript.readership }}
+								</p>
+
+								<p class=" mt-5">
+									Genres :
+									{% if genres %}
+										{{ genres }}
+									{% else %}
+										non-défini
+									{% endif %}
+								</p>
+
+								{% if manuscript.explicitContent == true %}
+									<p class="bold mt-5">
+										Ce manuscrit peut contenir des scènes choquantes de tout ordre et ne doit pas être lu par un public mineur ou sensible
+									</p>
+								{% else %}
+									<p class=" mt-5">
+										Ce manuscrit est adapté à tout public
+									</p>
+								{% endif %}
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+
+	<script>
+
+		$(window).resize(function () {
+if (window.innerWidth <= 768) {
+$('.jQuery').addClass('d-flex flex-column-reverse').removeClass('position-relative');
+$('.jQuery2').addClass('mt-5').removeClass('position-absolute');
+$('.jQuery3').addClass('mt-2').removeClass('position-relative');
+$('.jQuery4').addClass('mt-2').removeClass('mt-5 position-absolute');
+$('.jQuery5').addClass('mt-5');
+} else {
+$('.jQuery').addClass('position-relative').removeClass('d-flex flex-column-reverse');
+$('.jQuery2').addClass('position-absolute bottom-0').removeClass('mt-5');
+$('.jQuery3').addClass('position-relative').removeClass('mt-2');
+$('.jQuery4').addClass('position-absolute').removeClass('mt-2');
+$('.jQuery5').removeClass('mt-5');
+
+}
+});
+
+
+
+function enableDragSort(listClass) {
+
+  const chaptersArray = document.getElementsByClassName(listClass);
+console.log(chaptersArray)
+  Array.prototype.map.call(chaptersArray, (list) => {enableDragList(list)});
+
+}
+
+function enableDragList(list) {
+  
+  Array.prototype.map.call(list.children, (item) => {enableDragItem(item)}); }
+
+function enableDragItem(item) {
+  
+  item.setAttribute('draggable', true)
+  
+  item.ondrag = handleDrag;
+  item.ondragend = handleDrop;
+}
+
+function handleDrag(itemEvent) {
+	const selectedItem = itemEvent.target,
+        list = selectedItem.parentNode,
+        x = event.clientX,
+        y = event.clientY;
+
+	let swapItem = document.elementFromPoint(x, y) === null ? selectedItem : document.elementFromPoint(x, y);
+		console.log('swapItem =>' ,swapItem)
+		console.log('selectedItem =>', selectedItem)
+	if (list === swapItem.parentNode) {
+
+    //swapItem = swapItem !== selectedItem.nextSibling ? swapItem : swapItem.nextSibling;
+    
+	/*if(swapItem !== selectedItem.nextSibling) {
+		swapItem = swapItem
+	} else */
+	/*if (swapItem == selectedItem.nextSibling) { 
+		swapItem = swapItem.nextSibling 
+	} */
+
+
+	list.insertBefore(selectedItem, swapItem);
+	}
+}
+
+function handleDrop(itemEvent) {
+	
+	
+	// On récupère le nouveau tableau au moment du drop 
+	let sortedChaptersArray = itemEvent.target.parentNode.children;
+	const arrayOfPositionAndId = []
+    // A chaque fois que l'objet chapter est itéré dans la boucle on récupère son attribut data-id
+	// et on l'initialise son index dans le nouveau tableau avec la variable i dans le tableau arrayOfPositionAndId
+    let i = 0
+    for(let chapter of sortedChaptersArray) {
+        arrayOfPositionAndId[i] = chapter.getAttribute('data-id')
+        i++
+    }
+    // Encodage de l'array pour le passer dans une requête en ajax
+	const jsonArray = JSON.stringify(Object.assign({}, arrayOfPositionAndId))
+	$.ajax({
+            url: '/chapters/reorder',
+            method: 'POST',
+			
+            data: jsonArray
+            })
+    .fail(function(err) {
+        alert("Une erreur est survenue veuillez rafraîchir la page et recommencer.")
+	})
+    }
+
+//Fonction anonyme qui appelle la méthode enableDragSort pourquoi elle est entre paranthèse ? 
+// Les deux paranthèses après la méthode permettent d'appeler directement la fonction ?
+// Capture dans mon DOM les éléments de types box dès le chargement de la page
+(() => {enableDragSort('box')})();
+
+</script>
+
+{% endblock %}

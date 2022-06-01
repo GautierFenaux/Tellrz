@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Informations générales
+{% endblock %}
+
+{% block body %}
+
+	{# afficher uniquement le premier chapitre, et dans un petit espace dédié afficher le manuscrit #}
+	{# Afficher un dropdown avec la liste des chapitres #}
+
+		<section class="global" id="content">
+			<div class="container padding-top">
+				<div class="panels"> 
+					<div class="panel-body mt-3">
+						<div class="dropdown">
+							{% if chapters|length > 0 %}
+								
+									<button class="btn dropdown-toggle jQuery2 position-absolute top-0 start-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										Sélectionner un chapitre
+									</button>
+								
+								<ul class="dropdown-menu dropdown-style-chapter" aria-labelledby="dropdownMenuButton1">
+									<div class="d-flex-column width-dropdown overflow-auto height-dropdown widthDropDown">
+										{% for chapter in chapters %}
+											<li>
+												<a href="{{ path('manuscript_chapter', {'chapterId': chapter.id, 'manuscriptId': manuscript.id}) }}" class="btn w-100" >{{ chapter.title }}</a>
+											</li> 
+										{% endfor %}
+									</div>
+								</ul>
+							{% endif %}
+
+
+							
+						<div class="jQuery">
+							<h2 class="text-center">{{ manuscript.title }}</h2>
+
+							<div class="text-center">
+								<p class=" mt-5">
+								Intrigue :
+								{{ manuscript.description }}
+								</p>
+
+								<p class=" mt-5">
+									Lectorat visé :
+									{{ manuscript.readership }}
+								</p>
+
+								<p class=" mt-5"> 
+									Genres :
+									{% if genres %}
+									{{ genres }}
+									{% else %}
+										non-défini
+									{% endif %}
+								</p>
+
+								
+								{% if manuscript.explicitContent %}
+									<p class=" mt-5"> Ce manuscrit peut contenir des scènes choquantes de tout ordre et ne doit pas être lu par un public mineur ou sensible </p>
+									{% else %}
+									<p class=" mt-5"> Ce manuscrit est adapté à tout public </p>	
+								{% endif %}
+									
+								
+
+
+							</div>
+							{% for chapter in chapters %}
+								<div class="text-center">
+									{% if loop.first %}
+										<a href="{{ path('manuscript_chapter', {'chapterId': chapter.id, 'manuscriptId': manuscript.id}) }}" class="btn text-center mt-5 mb-5">
+											Commencer ma lecture
+										</a>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	{% endblock %}
+	{% block javascripts %}
+		<script>
+
+			$(window).resize(function () {
+				console.log(window.innerWidth)
+				if (window.innerWidth <= 768) {
+				$('.jQuery').addClass('mt-5');
+				$('.jQuery2').addClass('').removeClass('position-absolute top-0 start-0');
+				//$('.container').addClass('position-relative');
+				} else {
+				$('.jQuery').removeClass('mt-5');
+				$('.jQuery2').addClass('position-absolute').removeClass('mt-5');
+}
+});
+		</script>
+	{% endblock %}

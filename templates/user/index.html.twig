@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte
+{% endblock %}
+
+{% block body %}
+
+
+	{# Affichage d'une alerte bootstrap de confirmation des changements de données de l'utilisateur #}
+	{% for label, messages in app.flashes %}
+		{% for message in messages %}
+			<div class="alert alert-{{ label }}" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+
+	<div class="global pt-5 pb-5 " id="content">
+		<div class="container ">
+			<div class="wrapper mt-3">
+				<input class="radio" id="one" name="group" type="radio" checked>
+				<input class="radio" id="two" name="group" type="radio">
+				<input class="radio" id="three" name="group" type="radio">
+
+				<div class="tabs">
+					<label class="tab" id="one-tab" for="one">Mes manuscrits</label>
+					<label class="tab" id="two-tab" for="two">Ma liste de lecture</label>
+					<label class="tab" id="three-tab" for="three">Mon profil</label>
+				</div>
+				
+				<div class="panels">
+					<div class="panel" id="one-panel">
+						<div class="panel-body">
+							<a href="{{ path('edition_tools_new') }}" class="btn mt-3 ms-3">Nouveau manuscrit</a>
+							{% if manuscripts|length > 0 %}
+								<div class="mt-5 d-flex horizontalScroll">
+									{% for manuscript in manuscripts %}
+										<div class="">
+											<div class="card-body d-flex flex-wrap justify-content-center ">
+												<h5 class="card-title overflow-hidden">{{ manuscript.title }}
+												</h5>
+												{# <img src="{{ asset('images/manuscripts/' ~ manuscript.imageName) }}" alt="{{ manuscript.title }}" class="img-fluid mySlides"> #}
+												<img src="{{ asset('images/manuscripts/' ~ manuscript.imageName) | imagine_filter('my_thumb') }}"/>
+												<a href="{{ path('chapters_list', {'id': manuscript.id}) }}" class="btn btn-sm w-100 align-self-end mt-3">Modifier</a>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<div class="panel" id="two-panel">
+						<div class="panel-title">Liste des manuscrits</div>
+					</div>
+
+
+					<div class="panel" id="three-panel">
+						<div class="panel-title">Mon profil</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	
+	</div>
+{% endblock %}
+

@@ -1,0 +1,48 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Manuscript index{% endblock %}
+
+{% block body %}
+    <h1>Manuscript index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author_id</th>
+                <th>Description</th>
+                <th>ExplicitContent</th>
+                <th>Readership</th>
+                <th>ImageName</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for manuscript in manuscripts %}
+            <tr>
+                
+                <td>{{ manuscript.id }}</td>
+                <td>{{ manuscript.title }}</td>
+                <td>{{manuscript.authorId}}</td>
+                <td>{{ manuscript.description }}</td>
+                <td>{{ manuscript.explicitContent ? 'Yes' : 'No' }}</td>
+                <td>{{ manuscript.readership }}</td>
+                <td>{{ manuscript.imageName }}</td>
+                <td>{{ manuscript.updatedAt ? manuscript.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('admin_editing_tools_show', {'id': manuscript.id}) }}">show</a>
+                    <a href="{{ path('admin_editing_tools_edit', {'id': manuscript.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_editing_tools_new') }}">Create new</a>
+{% endblock %}

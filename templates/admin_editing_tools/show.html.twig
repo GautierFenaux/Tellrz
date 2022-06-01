@@ -1,0 +1,46 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Manuscript{% endblock %}
+
+{% block body %}
+    <h1>Manuscript</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ manuscript.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ manuscript.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ manuscript.description }}</td>
+            </tr>
+            <tr>
+                <th>ExplicitContent</th>
+                <td>{{ manuscript.explicitContent ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Readership</th>
+                <td>{{ manuscript.readership }}</td>
+            </tr>
+            <tr>
+                <th>ImageName</th>
+                <td>{{ manuscript.imageName }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ manuscript.updatedAt ? manuscript.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_editing_tools_index') }}">back to list</a>
+
+    <a href="{{ path('admin_editing_tools_edit', {'id': manuscript.id}) }}">edit</a>
+
+    {{ include('admin_editing_tools/_delete_form.html.twig') }}
+{% endblock %}

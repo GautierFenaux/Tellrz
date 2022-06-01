@@ -1,0 +1,6 @@
+{{ form_start(form, {'action' : path('admin_reporting_new', {'chapterId': chapterId, 'manuscriptId': manuscriptId} )}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success" id="formButton">{{ button_label|default('Envoyer') }}</button>
+{{ form_end(form) }}
+
+{# {'action' : path('admin_reporting_new', {'chapterId': chapterId, 'manuscriptId': manuscriptId} )} #}

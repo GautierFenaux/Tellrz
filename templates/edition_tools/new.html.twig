@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Manuscrit{% endblock %}
+
+{% block body %}
+
+<div class="padding-top global" id="content">
+    <div class="d-flex flex-row align-items-end justify-content-around p-2">
+    <h1>Informations générales</h1>
+    <a href="{{ path('profile') }}" class="btn">Retourner sur mon profil</a>
+    </div>
+
+    <div class="container pt-5 pb-5">
+    {{ include('edition_tools/_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}
+

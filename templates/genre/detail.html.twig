@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GenreController!
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="global pt-5" id="content">
+		<div class="container d-flex align-items-start">
+				<h1 class="">{{ genre }}</h1>
+		</div>
+
+		<div class="container mt-3 pb-5 ">
+			<div class="panels">
+				<div class="panel-body">
+					{% if manuscripts|length > 0 %}
+						<div class="mt-5 d-flex horizontalScroll">
+							{% for manuscript in manuscripts %}
+								<div class="card-style">
+									<div class="card-body d-flex flex-wrap justify-content-center">
+										<h5 class="card-title overflow-hidden" alt="{{ manuscript.title }}">{{ manuscript.title }}
+										</h5>
+										<img src="{{ asset('images/manuscripts/' ~ manuscript.imageName) }}" alt="{{ manuscript.title }}" class="img-fluid mySlides">
+										<a href="{{ path('manuscript', {'id': manuscript.id}) }}" class="btn btn-sm w-100 align-self-end mt-3">Lire</a>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

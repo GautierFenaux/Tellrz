@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ManuscriptController!
+{% endblock %}
+
+{% block body %}
+
+
+	<section class="global mb-5" id="content">
+		<div class="container padding-top">
+		{% for msg in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+			<div class="panels">
+				<div class="panel-body mt-3 position-relative">
+					
+					{% if chapters|length > 0 %}
+						{% if chapter|length > 0 %}
+						<div class="d-flex flex-wrap">
+							<div class="col-12 col-md-2">
+								<div class="dropdown d-inline-block">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										Sélectionner un chapitre
+									</button>
+									
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										{% for chap in chapters %}
+											<li>
+												<a href="{{ path('manuscript_chapter', {'chapterId': chap.id, 'manuscriptId': manuscript.id}) }}" class=" btn w-100 border-dropdown">{{ chap.title }}</a>
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+							<div class="col-12 col-md-8">
+								<h2 class="text-center">{{ chapter.title }}</h2>
+							</div>
+						</div>
+							
+							{# <ul class="dropdown-menu dropdown-style-chapter" aria-labelledby="dropdownMenuButton1">
+							
+								<div class="d-flex-column width-dropdown overflow-auto height-dropdown widthDropDown">
+									{% for chap in chapters %}
+										<li>
+											<a href="{{ path('manuscript_chapter', {'chapterId': chap.id, 'manuscriptId': manuscript.id}) }}" class=" btn w-100 border-dropdown">{{ chap.title }}</a>
+										</li>
+									{% endfor %}
+								</div>
+							</ul>  #}
+							
+							
+						
+
+
+							<article class="text-left text-lg-justify mt-5 container">
+
+								<p>
+									{{ chapter.content }}</p>
+								<div class=" d-flex justify-content-end mt-5">
+									{% if next_chapter is not null %}
+										<a href="{{ path('manuscript_chapter', {'chapterId': next_chapter.id, 'manuscriptId': manuscript.id}) }}" class="btn justify-content-end border-dropdown">Chapitre suivant</a>
+									{% else %}
+										<p>FIN</p>
+									{% endif %}
+								</div>
+							</article>
+						{% endif %}
+					{% endif %}
+					<!-- Button trigger modal -->
+					<button id="modalButton"type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#exampleModal">
+						Signaler
+					</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Signaler un contenu</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									{{ render(controller('App\\Controller\\ReportingController::new',  {'chapterId': chapter_id, 'manuscriptId': manuscript_id} )) }}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+	{% block javascripts %}
+
+		<script>
+		
+		$(document).ready(function(){
+        	$(".alert").slideDown(300).delay(4000).slideUp(300);
+    	});
+
+		$(window).resize(function () {
+			console.log(window.innerWidth)
+			if (window.innerWidth <= 992) {
+			//$('.jQuery').addClass('mt-5');
+			$('.jQuery2').addClass('w-50').removeClass('position-absolute top-0 start-0');
+			//$('.container').addClass('position-relative');
+			} else {
+			//$('.jQuery').removeClass('mt-5');
+			$('.jQuery2').addClass('position-absolute').removeClass('w-50');
+			}
+		});
+
+
+
+		</script> 
+	
+	{% endblock %}
+
+

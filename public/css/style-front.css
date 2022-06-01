@@ -1,0 +1,16 @@
+body{
+    background-color: gray;
+}
+h1{
+    font-size: 1.6rem;
+}
+h2{
+    font-size: 1.4rem;
+}
+.row-book img:hover{
+    -webkit-box-shadow: 2px 2px 5px 3px rgba(0,0,0,0.4);
+    box-shadow: 2px 2px 5px 3px rgba(0,0,0,0.4);
+}
+.text-justify{
+    text-align: justify;
+}

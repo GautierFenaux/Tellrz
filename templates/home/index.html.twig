@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block body %}
+	<div class="globalWrapperHome" id="content">
+		<div class="container styleContainer">
+			<div class="row testRow">
+				<div class="col-lg-6 content-wrapper">
+
+					<h2 class="h2Home">Devenez acteur de l'histoire !</h2>
+
+					<p class="pHome">Faites partie intégrante du processus de création en répondant aux questions de l’auteur</p>
+
+					<div class="d-grid gap-2">
+						{% if is_granted('ROLE_USER') %}
+							<a href="{{ path('edition_tools_new') }}" class="buttonHome btn">
+								Commencer mon histoire
+							</a>
+						{% else %}
+							<a href="{{ path('app_register') }}" class="buttonHome btn">
+								Commencer mon histoire
+							</a>
+						{% endif %}
+					</div>
+
+				</div>
+
+				<div class="col-lg-6">
+					<img class="img-fluid testImage" src="{{ asset('images/' ~ 'illustration_banner.svg' ) }}" alt="illustration_banner">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		{% endblock %}

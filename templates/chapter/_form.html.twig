@@ -1,0 +1,10 @@
+{{ form_start(form, { 'attr' : { 'id': 'asynchForm', 'onsubmit': 'return fetchgo()', } }) }}
+    {{ form_widget(form) }}
+    <div  class="d-flex justify-content-center">
+        <button class="btn w-25 mb-5">{{ button_label|default('Sauvegarder') }}</button>
+    </div>
+    {% if form.vars.submitted == true %}{{ message }} {% endif %}
+
+{{ form_end(form) }}
+
+
